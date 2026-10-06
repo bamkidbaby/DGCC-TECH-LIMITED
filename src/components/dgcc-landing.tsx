@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -8,6 +8,8 @@ import {
   FaArrowUpRightFromSquare,
   FaBars,
   FaCheck,
+  FaChevronLeft,
+  FaChevronRight,
   FaChevronDown,
   FaEnvelope,
   FaLocationDot,
@@ -74,7 +76,7 @@ const serviceOfferings: Array<{
 }> = [
   {
     id: "svc-web",
-    label: "Website design and development",
+    label: "Website Design and Development",
     description:
       "We build fast, modern, mobile-friendly websites that look right and load quickly on every screen.",
     image: "/images/services/web-development.jpg",
@@ -83,7 +85,7 @@ const serviceOfferings: Array<{
   },
   {
     id: "svc-it",
-    label: "Computer engineering and IT support",
+    label: "Computer Engineering and IT support",
     description:
       "Hands-on repairs and setups for offices and homes, plus remote IT support for clients anywhere in the world.",
     image: "/images/services/it-support.jpg",
@@ -92,7 +94,7 @@ const serviceOfferings: Array<{
   },
   {
     id: "svc-brand",
-    label: "Graphic designing and branding",
+    label: "Branding and Graphic designing",
     description:
       "Give your business a look people remember, on screen and on paper.",
     image: "/images/services/branding.jpg",
@@ -110,7 +112,7 @@ const serviceOfferings: Array<{
   },
   {
     id: "svc-print",
-    label: "General printing and merchandising",
+    label: "General Printing",
     description:
       "Design and print in one place, from a single business card to a full branded merchandise run.",
     image: "/images/services/printing.jpg",
@@ -130,7 +132,7 @@ const serviceOfferings: Array<{
 
 const additionalOfferings = [
   {
-    title: "Desktop and laptop sales",
+    title: "Desktop and Laptop Sales",
     description: "Genuine desktop and laptop devices selected for your needs.",
     image: "/images/services/computer-sales.jpg",
     imageAlt: "Laptop displayed on a clean workstation",
@@ -139,22 +141,13 @@ const additionalOfferings = [
     category: "Devices",
   },
   {
-    title: "Computer accessories",
+    title: "Computer Accessories",
     description: "Quality accessories to power and protect your technology.",
     image: "/images/services/computer-accessories.jpg",
     imageAlt: "Laptop computer ready for work",
     service: "Computer accessories sales",
     cta: "Ask about accessories",
     category: "Accessories",
-  },
-  {
-    title: "Online registrations",
-    description: "Fast, reliable and secure help with online registrations.",
-    image: "/images/services/online-registration.jpg",
-    imageAlt: "Technology professionals working at a computer",
-    service: "Online registrations",
-    cta: "Start a registration",
-    category: "Online service",
   },
   {
     title: "IT consultancy",
@@ -168,6 +161,186 @@ const additionalOfferings = [
 ] as const;
 
 const defaultService = "Website design and development";
+
+const pageHeroes: Record<
+  DgccPage,
+  {
+    eyebrow: string;
+    title: string;
+    description: string;
+    image: string;
+    imageAlt: string;
+    primary: { label: string; href: string; phone?: boolean };
+    secondary?: { label: string; href: string };
+  }
+> = {
+  home: {
+    eyebrow: "Technology, connected",
+    title: "Connecting dots in tech.",
+    description:
+      "Your trusted partner for smart tech solutions, innovative services and excellent support.",
+    image: "/images/services/computer-sales.jpg",
+    imageAlt:
+      "Laptop and technology set up on a clean professional workstation",
+    primary: {
+      label: "Call +234 708 252 3166",
+      href: "tel:+2347082523166",
+      phone: true,
+    },
+    secondary: { label: "See what we do", href: "/services" },
+  },
+  about: {
+    eyebrow: "One team, the full picture",
+    title: "About DGCC Tech",
+    description:
+      "We connect people, businesses and schools to technology that works, and to the people who keep it working.",
+    image: "/images/services/it-consultancy.jpg",
+    imageAlt: "Technology professionals discussing a project together",
+    primary: { label: "Explore our services", href: "/services" },
+    secondary: { label: "Talk to our team", href: "/contact" },
+  },
+  services: {
+    eyebrow: "Practical expertise",
+    title: "Technology services that work together.",
+    description:
+      "Six core services, plus hardware sales, online registrations and IT consultancy.",
+    image: "/images/services/web-development.jpg",
+    imageAlt: "Professional website development work in progress",
+    primary: { label: "Request a service", href: "/contact" },
+    secondary: { label: "Call our team", href: "tel:+2347082523166" },
+  },
+  contact: {
+    eyebrow: "Here when you need us",
+    title: "Get in touch",
+    description:
+      "Call, message or visit. Tell us what you need and we will tell you how we can help.",
+    image: "/images/services/it-support.jpg",
+    imageAlt: "IT professional helping a client with a laptop",
+    primary: {
+      label: "Call +234 708 252 3166",
+      href: "tel:+2347082523166",
+      phone: true,
+    },
+    secondary: { label: "Email our team", href: "mailto:dgcctech@gmail.com" },
+  },
+};
+
+function PageHero({ page }: { page: DgccPage }) {
+  const hero = pageHeroes[page];
+
+  return (
+    <section className="hero navy">
+      <div className="wrap">
+        <div className="hero-grid">
+          <div
+            className="hero-image"
+            data-aos="fade-right"
+            data-aos-duration="750"
+          >
+            <Image
+              src={hero.image}
+              alt={hero.imageAlt}
+              fill
+              priority
+              sizes="(max-width: 800px) 100vw, 50vw"
+              className="hero-photo"
+            />
+          </div>
+          <div
+            className="hero-copy"
+            data-aos="fade-left"
+            data-aos-duration="750"
+          >
+            <p className="hero-eyebrow">{hero.eyebrow}</p>
+            <h1>{hero.title}</h1>
+            <p className="lede">{hero.description}</p>
+            <div className="cta">
+              <a className="btn btn-gold" href={hero.primary.href}>
+                {hero.primary.phone && (
+                  <FaPhone aria-hidden="true" focusable="false" />
+                )}
+                {hero.primary.label}
+              </a>
+              {hero.secondary && (
+                <Link className="btn btn-ghost" href={hero.secondary.href}>
+                  {hero.secondary.label}
+                </Link>
+              )}
+            </div>
+            {page === "home" && (
+              <p className="hero-note">
+                Based in Oke-aro, Ogun State. Remote IT support for clients
+                worldwide.
+              </p>
+            )}
+          </div>
+        </div>
+        {page === "home" && (
+          <ul className="assure">
+            <li>
+              <FaCheck aria-hidden="true" focusable="false" />
+              Experienced team
+            </li>
+            <li>
+              <FaCheck aria-hidden="true" focusable="false" />
+              Quality service
+            </li>
+            <li>
+              <FaCheck aria-hidden="true" focusable="false" />
+              Affordable prices
+            </li>
+            <li>
+              <FaCheck aria-hidden="true" focusable="false" />
+              Customer satisfaction
+            </li>
+          </ul>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function ServiceCarousel({ children }: { children: React.ReactNode }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: -1 | 1) => {
+    const track = trackRef.current;
+    if (!track) {
+      return;
+    }
+
+    track.scrollBy({
+      left: direction * track.clientWidth * 0.8,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <div className="service-carousel">
+      <div className="carousel-controls" aria-label="Service card navigation">
+        <button
+          className="carousel-control"
+          type="button"
+          aria-label="Show previous services"
+          onClick={() => scroll(-1)}
+        >
+          <FaChevronLeft aria-hidden="true" focusable="false" />
+        </button>
+        <button
+          className="carousel-control"
+          type="button"
+          aria-label="Show next services"
+          onClick={() => scroll(1)}
+        >
+          <FaChevronRight aria-hidden="true" focusable="false" />
+        </button>
+      </div>
+      <div className="service-grid" ref={trackRef}>
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function DgccLanding({
   page,
@@ -190,68 +363,6 @@ export default function DgccLanding({
     const text = `Hello DGCC Tech,${name ? ` my name is ${name}.` : ""}\nI am interested in: ${service}.${message ? `\n\n${message}` : ""}`;
     return `mailto:dgcctech@gmail.com?subject=${encodeURIComponent(`Enquiry: ${service}`)}&body=${encodeURIComponent(text)}`;
   }, [name, message, service]);
-
-  useEffect(() => {
-    if (page !== "home") {
-      return;
-    }
-
-    const NS = "http://www.w3.org/2000/svg";
-    const ambient = document.getElementById("ambient");
-    if (ambient) {
-      let seed = 11;
-      const rnd = () => {
-        seed = (seed * 16807) % 2147483647;
-        return (seed - 1) / 2147483646;
-      };
-
-      for (let i = 0; i < 46; i += 1) {
-        const circle = document.createElementNS(NS, "circle");
-        circle.setAttribute("cx", (rnd() * 600).toFixed(1));
-        circle.setAttribute("cy", (rnd() * 520).toFixed(1));
-        circle.setAttribute("r", (1 + rnd() * 1.8).toFixed(1));
-        circle.setAttribute("fill", "#fff");
-        circle.setAttribute("opacity", (0.1 + rnd() * 0.22).toFixed(2));
-        ambient.appendChild(circle);
-      }
-    }
-
-    const toggleConnection = (nodeId: string, active: boolean) => {
-      const edges = document.querySelectorAll(
-        `#constellation .edge[data-n~="${nodeId}"]`,
-      );
-      const node = document.getElementById(`n${nodeId}`);
-      edges.forEach((edge) => edge.classList.toggle("on", active));
-      if (node) {
-        node.classList.toggle("hot", active);
-      }
-    };
-
-    const nodes = document.querySelectorAll(".node");
-    const listeners: Array<[Element, () => void, () => void]> = [];
-
-    nodes.forEach((node) => {
-      const target = node as HTMLElement;
-      const id = target.id.replace("n", "");
-      const enter = () => toggleConnection(id, true);
-      const leave = () => toggleConnection(id, false);
-      target.addEventListener("mouseenter", enter);
-      target.addEventListener("mouseleave", leave);
-      target.addEventListener("focus", enter);
-      target.addEventListener("blur", leave);
-      listeners.push([target, enter, leave]);
-    });
-
-    return () => {
-      listeners.forEach(([target, enter, leave]) => {
-        target.removeEventListener("mouseenter", enter);
-        target.removeEventListener("mouseleave", leave);
-        target.removeEventListener("focus", enter);
-        target.removeEventListener("blur", leave);
-      });
-      ambient?.replaceChildren();
-    };
-  }, [page]);
 
   return (
     <>
@@ -345,262 +456,7 @@ export default function DgccLanding({
       <main>
         {page === "home" && (
           <div className="page">
-            <section className="hero navy">
-              <div className="wrap">
-                <div className="hero-grid">
-                  <div
-                    className="hero-copy"
-                    data-aos="fade-right"
-                    data-aos-duration="850"
-                  >
-                    <h1>
-                      <span>Connecting</span>
-                      <span>dots in</span>
-                      <span>
-                        tech<i className="dot" aria-hidden="true"></i>
-                      </span>
-                    </h1>
-                    <p className="lede">
-                      Your trusted partner for smart tech solutions, innovative
-                      services and excellent support.
-                    </p>
-                    <div className="cta">
-                      <a className="btn btn-gold" href="tel:+2347082523166">
-                        <FaPhone aria-hidden="true" focusable="false" />
-                        Call +234 708 252 3166
-                      </a>
-                      <Link className="btn btn-ghost" href="/services">
-                        See what we do
-                      </Link>
-                    </div>
-                    <p className="hero-note">
-                      Based in Oke-aro, Ogun State. Remote IT support for
-                      clients worldwide.
-                    </p>
-                  </div>
-
-                  <div
-                    className="hero-art"
-                    data-aos="fade-left"
-                    data-aos-duration="850"
-                  >
-                    <svg
-                      id="constellation"
-                      viewBox="0 0 600 520"
-                      role="group"
-                      aria-label="Six DGCC Tech services connected around one hub. Select a dot to open that service."
-                    >
-                      <g id="ambient" aria-hidden="true" />
-                      <g aria-hidden="true">
-                        <path
-                          className="edge spoke"
-                          pathLength={1}
-                          data-n="1"
-                          style={{ animationDelay: "3.5s" }}
-                          d="M290 268 L150 100"
-                        />
-                        <path
-                          className="edge spoke"
-                          pathLength={1}
-                          data-n="2"
-                          style={{ animationDelay: "3.56s" }}
-                          d="M290 268 L400 72"
-                        />
-                        <path
-                          className="edge spoke"
-                          pathLength={1}
-                          data-n="3"
-                          style={{ animationDelay: "3.62s" }}
-                          d="M290 268 L480 245"
-                        />
-                        <path
-                          className="edge spoke"
-                          pathLength={1}
-                          data-n="4"
-                          style={{ animationDelay: "3.68s" }}
-                          d="M290 268 L420 440"
-                        />
-                        <path
-                          className="edge spoke"
-                          pathLength={1}
-                          data-n="5"
-                          style={{ animationDelay: "3.74s" }}
-                          d="M290 268 L200 468"
-                        />
-                        <path
-                          className="edge spoke"
-                          pathLength={1}
-                          data-n="6"
-                          style={{ animationDelay: "3.8s" }}
-                          d="M290 268 L130 290"
-                        />
-                      </g>
-                      <g aria-hidden="true">
-                        <path
-                          className="edge peri"
-                          pathLength={1}
-                          data-n="1 2"
-                          style={{ animationDelay: ".35s" }}
-                          d="M150 100 L400 72"
-                        />
-                        <path
-                          className="edge peri"
-                          pathLength={1}
-                          data-n="2 3"
-                          style={{ animationDelay: ".9s" }}
-                          d="M400 72 L480 245"
-                        />
-                        <path
-                          className="edge peri"
-                          pathLength={1}
-                          data-n="3 4"
-                          style={{ animationDelay: "1.45s" }}
-                          d="M480 245 L420 440"
-                        />
-                        <path
-                          className="edge peri"
-                          pathLength={1}
-                          data-n="4 5"
-                          style={{ animationDelay: "2s" }}
-                          d="M420 440 L200 468"
-                        />
-                        <path
-                          className="edge peri"
-                          pathLength={1}
-                          data-n="5 6"
-                          style={{ animationDelay: "2.55s" }}
-                          d="M200 468 L130 290"
-                        />
-                        <path
-                          className="edge peri"
-                          pathLength={1}
-                          data-n="6 1"
-                          style={{ animationDelay: "3.1s" }}
-                          d="M130 290 L150 100"
-                        />
-                      </g>
-                      <g className="hub" aria-hidden="true">
-                        <circle className="hub-ring" cx="290" cy="268" r="38" />
-                        <circle
-                          className="hub-arc"
-                          cx="290"
-                          cy="268"
-                          r="38"
-                          strokeDasharray="110 240"
-                          transform="rotate(-70 290 268)"
-                        />
-                        <text x="290" y="274" textAnchor="middle">
-                          DGCC
-                        </text>
-                      </g>
-                      <a
-                        className="node"
-                        id="n1"
-                        href="/services#svc-web"
-                        style={{ animationDelay: ".15s" }}
-                        aria-label="Website design and development"
-                      >
-                        <circle cx="150" cy="100" r="30" fill="transparent" />
-                        <circle className="halo" cx="150" cy="100" r="17" />
-                        <circle className="dot" cx="150" cy="100" r="8" />
-                        <text x="134" y="92" textAnchor="end">
-                          Websites
-                        </text>
-                      </a>
-                      <a
-                        className="node"
-                        id="n2"
-                        href="/services#svc-brand"
-                        style={{ animationDelay: ".7s" }}
-                        aria-label="Graphic designing and branding"
-                      >
-                        <circle cx="400" cy="72" r="30" fill="transparent" />
-                        <circle className="halo" cx="400" cy="72" r="17" />
-                        <circle className="dot" cx="400" cy="72" r="8" />
-                        <text x="418" y="64" textAnchor="start">
-                          Branding
-                        </text>
-                      </a>
-                      <a
-                        className="node"
-                        id="n3"
-                        href="/services#svc-print"
-                        style={{ animationDelay: "1.25s" }}
-                        aria-label="General printing and merchandising"
-                      >
-                        <circle cx="480" cy="245" r="30" fill="transparent" />
-                        <circle className="halo" cx="480" cy="245" r="17" />
-                        <circle className="dot" cx="480" cy="245" r="8" />
-                        <text x="500" y="252" textAnchor="start">
-                          Printing
-                        </text>
-                      </a>
-                      <a
-                        className="node"
-                        id="n4"
-                        href="/services#svc-train"
-                        style={{ animationDelay: "1.8s" }}
-                        aria-label="Tech training"
-                      >
-                        <circle cx="420" cy="440" r="30" fill="transparent" />
-                        <circle className="halo" cx="420" cy="440" r="17" />
-                        <circle className="dot" cx="420" cy="440" r="8" />
-                        <text x="438" y="462" textAnchor="start">
-                          Training
-                        </text>
-                      </a>
-                      <a
-                        className="node"
-                        id="n5"
-                        href="/services#svc-cyber"
-                        style={{ animationDelay: "2.35s" }}
-                        aria-label="Cyber security"
-                      >
-                        <circle cx="200" cy="468" r="30" fill="transparent" />
-                        <circle className="halo" cx="200" cy="468" r="17" />
-                        <circle className="dot" cx="200" cy="468" r="8" />
-                        <text x="188" y="496" textAnchor="end">
-                          Cyber security
-                        </text>
-                      </a>
-                      <a
-                        className="node"
-                        id="n6"
-                        href="/services#svc-it"
-                        style={{ animationDelay: "2.9s" }}
-                        aria-label="Computer engineering and IT support"
-                      >
-                        <circle cx="130" cy="290" r="30" fill="transparent" />
-                        <circle className="halo" cx="130" cy="290" r="17" />
-                        <circle className="dot" cx="130" cy="290" r="8" />
-                        <text x="110" y="297" textAnchor="end">
-                          IT support
-                        </text>
-                      </a>
-                    </svg>
-                  </div>
-                </div>
-
-                <ul className="assure">
-                  <li>
-                    <FaCheck aria-hidden="true" focusable="false" />
-                    Experienced team
-                  </li>
-                  <li>
-                    <FaCheck aria-hidden="true" focusable="false" />
-                    Quality service
-                  </li>
-                  <li>
-                    <FaCheck aria-hidden="true" focusable="false" />
-                    Affordable prices
-                  </li>
-                  <li>
-                    <FaCheck aria-hidden="true" focusable="false" />
-                    Customer satisfaction
-                  </li>
-                </ul>
-              </div>
-            </section>
+            <PageHero page="home" />
 
             <section className="section">
               <div className="wrap">
@@ -611,7 +467,7 @@ export default function DgccLanding({
                     running, staying protected and looking the part.
                   </p>
                 </div>
-                <div className="service-grid home-service-grid">
+                <ServiceCarousel>
                   {serviceOfferings.map((offering, index) => (
                     <article
                       className="service-card"
@@ -652,7 +508,7 @@ export default function DgccLanding({
                       </div>
                     </article>
                   ))}
-                </div>
+                </ServiceCarousel>
                 <Link className="btn btn-outline" href="/services">
                   View all services
                 </Link>
@@ -685,15 +541,7 @@ export default function DgccLanding({
 
         {page === "about" && (
           <div className="page">
-            <section className="page-head navy">
-              <div className="wrap" data-aos="fade-down">
-                <h1>About us</h1>
-                <p>
-                  We connect people, businesses and schools to technology that
-                  works, and to the people who keep it working.
-                </p>
-              </div>
-            </section>
+            <PageHero page="about" />
 
             <section className="section">
               <div className="wrap split">
@@ -835,19 +683,11 @@ export default function DgccLanding({
 
         {page === "services" && (
           <div className="page">
-            <section className="page-head navy">
-              <div className="wrap" data-aos="fade-down">
-                <h1>Our services</h1>
-                <p>
-                  Six core services, plus hardware sales, online registrations
-                  and IT consultancy.
-                </p>
-              </div>
-            </section>
+            <PageHero page="services" />
 
             <section className="section">
               <div className="wrap">
-                <div className="service-grid">
+                <ServiceCarousel>
                   {serviceOfferings.map((offering, index) => (
                     <article
                       className="service-card"
@@ -886,7 +726,7 @@ export default function DgccLanding({
                       </div>
                     </article>
                   ))}
-                </div>
+                </ServiceCarousel>
               </div>
             </section>
 
@@ -899,7 +739,7 @@ export default function DgccLanding({
                     first? We can help with that too.
                   </p>
                 </div>
-                <div className="service-grid">
+                <ServiceCarousel>
                   {additionalOfferings.map((offering, index) => (
                     <article
                       className="service-card"
@@ -936,7 +776,7 @@ export default function DgccLanding({
                       </div>
                     </article>
                   ))}
-                </div>
+                </ServiceCarousel>
               </div>
             </section>
           </div>
@@ -944,21 +784,13 @@ export default function DgccLanding({
 
         {page === "contact" && (
           <div className="page">
+            <PageHero page="contact" />
             <section className="contact navy">
               <div className="wrap">
                 <div className="contact-grid">
                   <div data-aos="fade-right">
-                    <h1>Get in touch</h1>
-                    <p className="contact-lede">
-                      Call, message or visit. Tell us what you need and we will
-                      tell you how we can help.
-                    </p>
-
                     <div className="group">
-                      <span className="label">
-                        <FaPhone aria-hidden="true" focusable="false" />
-                        Phone and WhatsApp
-                      </span>
+                      <span className="label">Phone and WhatsApp</span>
                       <a className="big-link" href="tel:+2347082523166">
                         +234 708 252 3166
                       </a>
@@ -967,19 +799,13 @@ export default function DgccLanding({
                       </a>
                     </div>
                     <div className="group">
-                      <span className="label">
-                        <FaEnvelope aria-hidden="true" focusable="false" />
-                        Email
-                      </span>
-                      <a className="mail" href="mailto:dgcctech@gmail.com">
-                        dgcctech@gmail.com
+                      <span className="label">Email</span>
+                      <a className="mail" href="mailto:support@dgcctechltd.com">
+                        support@dgcctechltd.com
                       </a>
                     </div>
                     <div className="group">
-                      <span className="label">
-                        <FaLocationDot aria-hidden="true" focusable="false" />
-                        Visit us
-                      </span>
+                      <span className="label">Visit us</span>
                       <address>
                         3 Akinguroye Street, Toluwalase Estate ASB Bus Stop
                         <br />
