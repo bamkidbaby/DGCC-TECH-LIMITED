@@ -17,10 +17,11 @@ export default function AosInitializer() {
 
       if (!initialized.current) {
         aos.init({
-          duration: 750,
+          duration: 650,
           easing: "ease-out-cubic",
-          offset: 80,
+          offset: 65,
           once: true,
+          mirror: false,
           disable: () =>
             window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         });

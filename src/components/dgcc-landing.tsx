@@ -11,13 +11,52 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaChevronDown,
-  FaEnvelope,
-  FaLocationDot,
   FaPhone,
   FaXmark,
 } from "react-icons/fa6";
 
 type DgccPage = "home" | "about" | "services" | "contact";
+type InnerPage = Exclude<DgccPage, "home">;
+type AosAnimation =
+  | "fade-up"
+  | "fade-down"
+  | "fade-left"
+  | "fade-right"
+  | "zoom-in"
+  | "zoom-in-up"
+  | "zoom-in-down";
+
+type AosOptions = {
+  delay?: number;
+  duration?: number;
+  offset?: number;
+  once?: boolean;
+  easing?: string;
+};
+
+function aosProps(animation: AosAnimation, options: AosOptions = {}) {
+  return {
+    "data-aos": animation,
+    "data-aos-delay": options.delay ?? 0,
+    "data-aos-duration": options.duration ?? 650,
+    ...(options.offset === undefined
+      ? {}
+      : { "data-aos-offset": options.offset }),
+    ...(options.once === undefined
+      ? {}
+      : { "data-aos-once": options.once }),
+    ...(options.easing === undefined
+      ? {}
+      : { "data-aos-easing": options.easing }),
+  };
+}
+
+const cardAnimations: AosAnimation[] = [
+  "fade-up",
+  "fade-left",
+  "fade-right",
+  "zoom-in",
+];
 
 const values = [
   {
@@ -163,7 +202,7 @@ const additionalOfferings = [
 const defaultService = "Website design and development";
 
 const pageHeroes: Record<
-  DgccPage,
+  InnerPage,
   {
     eyebrow: string;
     title: string;
@@ -174,21 +213,6 @@ const pageHeroes: Record<
     secondary?: { label: string; href: string };
   }
 > = {
-  home: {
-    eyebrow: "Technology, connected",
-    title: "Connecting dots in tech.",
-    description:
-      "Your trusted partner for smart tech solutions, innovative services and excellent support.",
-    image: "/images/services/computer-sales.jpg",
-    imageAlt:
-      "Laptop and technology set up on a clean professional workstation",
-    primary: {
-      label: "Call +234 708 252 3166",
-      href: "tel:+2347082523166",
-      phone: true,
-    },
-    secondary: { label: "See what we do", href: "/services" },
-  },
   about: {
     eyebrow: "One team, the full picture",
     title: "About DGCC Tech",
@@ -225,7 +249,7 @@ const pageHeroes: Record<
   },
 };
 
-function PageHero({ page }: { page: DgccPage }) {
+function PageHero({ page }: { page: InnerPage }) {
   const hero = pageHeroes[page];
 
   return (
@@ -234,8 +258,7 @@ function PageHero({ page }: { page: DgccPage }) {
         <div className="hero-grid">
           <div
             className="hero-image"
-            data-aos="fade-right"
-            data-aos-duration="750"
+            {...aosProps("fade-right", { duration: 700 })}
           >
             <Image
               src={hero.image}
@@ -248,8 +271,7 @@ function PageHero({ page }: { page: DgccPage }) {
           </div>
           <div
             className="hero-copy"
-            data-aos="fade-left"
-            data-aos-duration="750"
+            {...aosProps("fade-left", { duration: 700, delay: 80 })}
           >
             <p className="hero-eyebrow">{hero.eyebrow}</p>
             <h1>{hero.title}</h1>
@@ -267,34 +289,160 @@ function PageHero({ page }: { page: DgccPage }) {
                 </Link>
               )}
             </div>
-            {page === "home" && (
-              <p className="hero-note">
-                Based in Oke-aro, Ogun State. Remote IT support for clients
-                worldwide.
-              </p>
-            )}
           </div>
         </div>
-        {page === "home" && (
-          <ul className="assure">
-            <li>
-              <FaCheck aria-hidden="true" focusable="false" />
-              Experienced team
-            </li>
-            <li>
-              <FaCheck aria-hidden="true" focusable="false" />
-              Quality service
-            </li>
-            <li>
-              <FaCheck aria-hidden="true" focusable="false" />
-              Affordable prices
-            </li>
-            <li>
-              <FaCheck aria-hidden="true" focusable="false" />
-              Customer satisfaction
-            </li>
-          </ul>
-        )}
+      </div>
+    </section>
+  );
+}
+
+function HomeHero() {
+  return (
+    <section className="home-hero navy">
+      <Image
+        src="/images/services/computer-sales.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="home-hero-background"
+      />
+      <div className="home-hero-shade" aria-hidden="true" />
+      <div className="wrap home-hero-wrap">
+        <div className="home-hero-grid">
+          <div
+            className="home-hero-copy"
+            {...aosProps("fade-right", { duration: 700 })}
+          >
+            <p className="hero-eyebrow">Technology, connected</p>
+            <h1>Connecting dots in tech.</h1>
+            <p className="lede">
+              Your trusted partner for smart tech solutions, innovative services
+              and excellent support.
+            </p>
+            <div className="cta">
+              <a className="btn btn-gold" href="tel:+2347082523166">
+                <FaPhone aria-hidden="true" focusable="false" />
+                Call +234 708 252 3166
+              </a>
+              <Link className="btn btn-ghost" href="/services">
+                See what we do
+              </Link>
+            </div>
+            <p className="hero-note">
+              Based in Oke-aro, Ogun State. Remote IT support for clients
+              worldwide.
+            </p>
+          </div>
+
+          <div
+            className="home-hero-art"
+            {...aosProps("fade-left", { duration: 700, delay: 100 })}
+          >
+            <svg
+              viewBox="0 0 600 520"
+              role="group"
+              aria-label="DGCC Tech services connected around one hub"
+            >
+              <g className="home-network-lines" aria-hidden="true">
+                <path d="M300 260 140 104M300 260 390 76M300 260 478 226M300 260 430 414M300 260 190 442M300 260 110 286" />
+                <path d="m140 104 250-28 88 150-48 188-240 28-80-156z" />
+              </g>
+              <g className="home-network-hub" aria-hidden="true">
+                <circle cx="300" cy="260" r="48" />
+                <circle className="home-network-arc" cx="300" cy="260" r="48" />
+                <text x="300" y="266" textAnchor="middle">
+                  DGCC
+                </text>
+              </g>
+              <a
+                href="/services#svc-web"
+                aria-label="Website design and development"
+              >
+                <circle
+                  className="home-network-node"
+                  cx="140"
+                  cy="104"
+                  r="10"
+                />
+                <text x="124" y="96" textAnchor="end">
+                  Websites
+                </text>
+              </a>
+              <a
+                href="/services#svc-brand"
+                aria-label="Branding and graphic design"
+              >
+                <circle className="home-network-node" cx="390" cy="76" r="10" />
+                <text x="410" y="68">
+                  Branding
+                </text>
+              </a>
+              <a href="/services#svc-print" aria-label="Printing services">
+                <circle
+                  className="home-network-node"
+                  cx="478"
+                  cy="226"
+                  r="10"
+                />
+                <text x="498" y="232">
+                  Printing
+                </text>
+              </a>
+              <a href="/services#svc-train" aria-label="Tech training">
+                <circle
+                  className="home-network-node"
+                  cx="430"
+                  cy="414"
+                  r="10"
+                />
+                <text x="450" y="422">
+                  Training
+                </text>
+              </a>
+              <a href="/services#svc-cyber" aria-label="Cyber security">
+                <circle
+                  className="home-network-node"
+                  cx="190"
+                  cy="442"
+                  r="10"
+                />
+                <text x="174" y="466" textAnchor="end">
+                  Cyber security
+                </text>
+              </a>
+              <a href="/services#svc-it" aria-label="IT support">
+                <circle
+                  className="home-network-node"
+                  cx="110"
+                  cy="286"
+                  r="10"
+                />
+                <text x="90" y="292" textAnchor="end">
+                  IT support
+                </text>
+              </a>
+            </svg>
+          </div>
+        </div>
+        <ul className="assure">
+          <li>
+            <FaCheck aria-hidden="true" focusable="false" />
+            Experienced team
+          </li>
+          <li>
+            <FaCheck aria-hidden="true" focusable="false" />
+            Quality service
+          </li>
+          <li>
+            <FaCheck aria-hidden="true" focusable="false" />
+            Affordable prices
+          </li>
+          <li>
+            <FaCheck aria-hidden="true" focusable="false" />
+            Customer satisfaction
+          </li>
+        </ul>
       </div>
     </section>
   );
@@ -456,11 +604,11 @@ export default function DgccLanding({
       <main>
         {page === "home" && (
           <div className="page">
-            <PageHero page="home" />
+            <HomeHero />
 
             <section className="section">
               <div className="wrap">
-                <div className="section-head" data-aos="fade-up">
+                <div className="section-head" {...aosProps("fade-down")}>
                   <h2>What we do</h2>
                   <p>
                     Six core services that cover getting online, staying
@@ -472,8 +620,10 @@ export default function DgccLanding({
                     <article
                       className="service-card"
                       key={offering.id}
-                      data-aos="fade-up"
-                      data-aos-delay={(index % 3) * 100}
+                      {...aosProps(cardAnimations[index % cardAnimations.length], {
+                        delay: (index % cardAnimations.length) * 70,
+                        duration: 600,
+                      })}
                     >
                       <Link
                         className="service-card-image"
@@ -494,17 +644,6 @@ export default function DgccLanding({
                         </span>
                         <h3>{offering.label}</h3>
                         <p>{offering.description}</p>
-                        <Link
-                          className="service-card-link"
-                          href={`/services#${offering.id}`}
-                        >
-                          Explore service{" "}
-                          <FaArrowRight
-                            className="service-card-arrow"
-                            aria-hidden="true"
-                            focusable="false"
-                          />
-                        </Link>
                       </div>
                     </article>
                   ))}
@@ -517,10 +656,10 @@ export default function DgccLanding({
 
             <section className="section alt">
               <div className="wrap split">
-                <div data-aos="fade-right">
+                <div {...aosProps("fade-right")}>
                   <h2>One team for the whole chain</h2>
                 </div>
-                <div className="prose" data-aos="fade-left">
+                <div className="prose" {...aosProps("fade-left", { delay: 80 })}>
                   <p>
                     A new website needs a logo. A logo needs printing. A growing
                     business needs its data protected. At DGCC Tech those jobs
@@ -545,7 +684,7 @@ export default function DgccLanding({
 
             <section className="section">
               <div className="wrap split">
-                <div className="prose" data-aos="fade-right">
+                <div className="prose" {...aosProps("fade-right")}>
                   <h2 style={{ marginBottom: "1.5rem" }}>Who we are</h2>
                   <p>
                     DGCC Tech Limited is a technology company based in Oke-aro
@@ -566,7 +705,7 @@ export default function DgccLanding({
                     full picture.
                   </p>
                 </div>
-                <dl className="facts" data-aos="fade-left">
+                <dl className="facts" {...aosProps("fade-left", { delay: 80 })}>
                   <div>
                     <dt>Company</dt>
                     <dd>DGCC Tech Limited</dd>
@@ -601,7 +740,7 @@ export default function DgccLanding({
 
             <section className="section alt">
               <div className="wrap">
-                <div className="section-head" data-aos="fade-up">
+                <div className="section-head" {...aosProps("fade-down")}>
                   <h2>The dots we connect</h2>
                   <p>
                     Five needs that usually mean five different suppliers. With
@@ -609,35 +748,40 @@ export default function DgccLanding({
                   </p>
                 </div>
                 <ul className="dot-grid">
-                  <li data-aos="fade-up" data-aos-delay="0">
+                  <li {...aosProps("fade-up")}>
+                    <span className="editorial-index">01 / CAPABILITY</span>
                     <h3>Get online</h3>
                     <p>
                       Corporate sites, e-commerce stores, school portals and
                       blogs.
                     </p>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="75">
+                  <li {...aosProps("fade-left", { delay: 60 })}>
+                    <span className="editorial-index">02 / SUPPORT</span>
                     <h3>Stay running</h3>
                     <p>
                       Repairs, office networking, CCTV, server setup and remote
                       IT support.
                     </p>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="150">
+                  <li {...aosProps("fade-right", { delay: 100 })}>
+                    <span className="editorial-index">03 / SECURITY</span>
                     <h3>Stay protected</h3>
                     <p>
                       SSL, website security, backups, email protection and hack
                       prevention.
                     </p>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="225">
+                  <li {...aosProps("zoom-in", { delay: 60, duration: 600 })}>
+                    <span className="editorial-index">04 / IDENTITY</span>
                     <h3>Look the part</h3>
                     <p>
                       Logos, brand identity, flyers, packaging and everything we
                       print.
                     </p>
                   </li>
-                  <li data-aos="fade-up" data-aos-delay="300">
+                  <li {...aosProps("fade-up", { delay: 100 })}>
+                    <span className="editorial-index">05 / LEARNING</span>
                     <h3>Grow skills</h3>
                     <p>
                       Practical training in web development, design, computer
@@ -650,12 +794,22 @@ export default function DgccLanding({
 
             <section className="section">
               <div className="wrap">
-                <div className="section-head" data-aos="fade-up">
+                <div className="section-head" {...aosProps("zoom-in-up")}>
                   <h2>What you can expect</h2>
                 </div>
                 <div className="values">
-                  {values.map(({ title, text }) => (
-                    <div className="val" key={title} data-aos="fade-up">
+                  {values.map(({ title, text }, index) => (
+                    <div
+                      className="val"
+                      key={title}
+                      {...aosProps(cardAnimations[index], {
+                        delay: index * 65,
+                        duration: 600,
+                      })}
+                    >
+                      <span className="editorial-index">
+                        {String(index + 1).padStart(2, "0")} / OUR VALUES
+                      </span>
                       <h3>{title}</h3>
                       <p>{text}</p>
                     </div>
@@ -666,10 +820,10 @@ export default function DgccLanding({
 
             <section className="section alt">
               <div className="wrap">
-                <div className="section-head" data-aos="fade-up">
+                <div className="section-head" {...aosProps("fade-left")}>
                   <h2>Who we work with</h2>
                 </div>
-                <ul className="chips" data-aos="fade-up">
+                <ul className="chips" {...aosProps("fade-right", { delay: 80 })}>
                   <li>Businesses and offices</li>
                   <li>Schools</li>
                   <li>Online sellers</li>
@@ -693,8 +847,10 @@ export default function DgccLanding({
                       className="service-card"
                       key={offering.id}
                       id={offering.id}
-                      data-aos="fade-up"
-                      data-aos-delay={(index % 3) * 100}
+                      {...aosProps(cardAnimations[index % cardAnimations.length], {
+                        delay: (index % cardAnimations.length) * 70,
+                        duration: 600,
+                      })}
                     >
                       <div className="service-card-image">
                         <Image
@@ -732,7 +888,7 @@ export default function DgccLanding({
 
             <section className="section alt" id="svc-more">
               <div className="wrap">
-                <div className="section-head" data-aos="fade-up">
+                <div className="section-head" {...aosProps("zoom-in-down")}>
                   <h2>Also available at DGCC Tech</h2>
                   <p>
                     Need the hardware, the registration or just some good advice
@@ -744,8 +900,10 @@ export default function DgccLanding({
                     <article
                       className="service-card"
                       key={offering.service}
-                      data-aos="fade-up"
-                      data-aos-delay={(index % 3) * 100}
+                      {...aosProps(cardAnimations[(index + 1) % cardAnimations.length], {
+                        delay: index * 70,
+                        duration: 600,
+                      })}
                     >
                       <div className="service-card-image">
                         <Image
@@ -788,7 +946,7 @@ export default function DgccLanding({
             <section className="contact navy">
               <div className="wrap">
                 <div className="contact-grid">
-                  <div data-aos="fade-right">
+                  <div {...aosProps("fade-right")}>
                     <div className="group">
                       <span className="label">Phone and WhatsApp</span>
                       <a className="big-link" href="tel:+2347082523166">
@@ -831,7 +989,7 @@ export default function DgccLanding({
                     className="panel"
                     id="requestForm"
                     noValidate
-                    data-aos="fade-left"
+                    {...aosProps("fade-left", { delay: 80 })}
                   >
                     <h2>Tell us what you need</h2>
                     <p>Fill this in and send it straight to us.</p>
@@ -902,15 +1060,17 @@ export default function DgccLanding({
 
             <section className="section alt">
               <div className="wrap">
-                <div className="section-head" data-aos="fade-up">
+                <div className="section-head" {...aosProps("fade-down")}>
                   <h2>Before you call</h2>
                 </div>
                 <div className="faq">
                   {faqs.map(({ question, answer }, index) => (
                     <details
                       key={question}
-                      data-aos="fade-up"
-                      data-aos-delay={(index % 3) * 75}
+                      {...aosProps(cardAnimations[index % cardAnimations.length], {
+                        delay: (index % cardAnimations.length) * 55,
+                        duration: 600,
+                      })}
                     >
                       <summary>
                         {question}
@@ -930,7 +1090,11 @@ export default function DgccLanding({
         )}
 
         {page !== "contact" && (
-          <section className="cta-band navy" id="ctaBand" data-aos="fade-up">
+          <section
+            className="cta-band navy"
+            id="ctaBand"
+            {...aosProps("zoom-in", { duration: 650 })}
+          >
             <div className="wrap cta-inner">
               <div>
                 <h2>Have a project in mind?</h2>
@@ -956,7 +1120,7 @@ export default function DgccLanding({
 
       <footer className="site-footer">
         <div className="wrap foot-grid">
-          <div>
+          <div {...aosProps("fade-up", { duration: 600 })}>
             <p className="foot-slogan">Connecting dots in tech.</p>
             <p>
               DGCC Tech Limited
@@ -964,7 +1128,7 @@ export default function DgccLanding({
               Oke-aro Matogun, Ogun State
             </p>
           </div>
-          <div>
+          <div {...aosProps("fade-up", { delay: 70, duration: 600 })}>
             <h2>Pages</h2>
             <div className="foot-links">
               <Link href="/">Home</Link>
@@ -973,7 +1137,7 @@ export default function DgccLanding({
               <Link href="/contact">Contact</Link>
             </div>
           </div>
-          <div>
+          <div {...aosProps("fade-up", { delay: 130, duration: 600 })}>
             <h2>Reach us</h2>
             <div className="foot-links">
               <a href="tel:+2347082523166">+234 708 252 3166</a>
