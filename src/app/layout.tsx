@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   },
   description:
     "Web design, IT support, cyber security, branding, printing and tech training from DGCC Tech Limited.",
+  icons: {
+    icon: "/images/logo.png",
+  },
 };
 
 export default function RootLayout({

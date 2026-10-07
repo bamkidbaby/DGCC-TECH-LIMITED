@@ -22,6 +22,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 84px);
   background: var(--navy);
+  overflow-x: clip;
 }
 
 body {
@@ -51,6 +52,9 @@ textarea {
 
 a {
   color: var(--link);
+  transition:
+    color 300ms ease-out,
+    text-decoration-color 300ms ease-out;
 }
 
 :focus-visible {
@@ -100,10 +104,10 @@ h3 {
   cursor: pointer;
   border: 1.5px solid transparent;
   transition:
-    background-color 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease,
-    transform 0.15s ease;
+    background-color 300ms ease-out,
+    border-color 300ms ease-out,
+    color 300ms ease-out,
+    transform 300ms ease-out;
 }
 
 .btn:hover {
@@ -174,7 +178,7 @@ h3 {
   margin-right: auto;
 }
 
-.brand svg {
+.brand img {
   width: 40px;
   height: 40px;
   flex: none;
@@ -183,13 +187,10 @@ h3 {
 .brand-word {
   font-family: var(--display);
   font-weight: 800;
-  font-size: 1.05rem;
-  line-height: 0.95;
+  font-size: 1rem;
+  line-height: 1;
   letter-spacing: 0.01em;
-}
-
-.brand-word span {
-  display: block;
+  white-space: nowrap;
 }
 
 .nav {
@@ -205,6 +206,9 @@ h3 {
   font-size: 0.98rem;
   padding: 0.45rem 0;
   border-bottom: 2px solid transparent;
+  transition:
+    color 300ms ease-out,
+    border-color 300ms ease-out;
 }
 
 .nav a:hover {
@@ -227,9 +231,9 @@ h3 {
   border: 1.5px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition:
-    background-color 200ms ease,
-    border-color 200ms ease,
-    color 200ms ease;
+    background-color 300ms ease-out,
+    border-color 300ms ease-out,
+    color 300ms ease-out;
 }
 
 .menu-btn svg {
@@ -270,7 +274,7 @@ h3 {
 
 .hero-photo {
   object-fit: cover;
-  transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  transition: transform 450ms ease-out;
 }
 
 .hero-image:hover .hero-photo {
@@ -421,9 +425,9 @@ h3 {
   stroke: rgba(255, 255, 255, 0.76);
   stroke-width: 2;
   transition:
-    r 220ms ease,
-    fill 220ms ease,
-    stroke 220ms ease;
+    r 300ms ease-out,
+    fill 300ms ease-out,
+    stroke 300ms ease-out;
 }
 
 .home-hero-art a text {
@@ -431,7 +435,7 @@ h3 {
   font-family: var(--body);
   font-size: 18px;
   font-weight: 600;
-  transition: fill 220ms ease;
+  transition: fill 300ms ease-out;
 }
 
 .home-hero-art a:hover .home-network-node,
@@ -627,10 +631,10 @@ h3 {
   color: var(--navy);
   cursor: pointer;
   transition:
-    border-color 200ms ease,
-    background-color 200ms ease,
-    color 200ms ease,
-    transform 200ms ease;
+    border-color 300ms ease-out,
+    background-color 300ms ease-out,
+    color 300ms ease-out,
+    transform 300ms ease-out;
 }
 
 .carousel-control:hover {
@@ -657,9 +661,9 @@ h3 {
   border-radius: 8px;
   box-shadow: 0 4px 14px rgba(10, 27, 92, 0.05);
   transition:
-    transform 300ms ease,
-    box-shadow 300ms ease,
-    border-color 300ms ease;
+    transform 350ms ease-out,
+    box-shadow 350ms ease-out,
+    border-color 350ms ease-out;
 }
 
 @media (min-width: 800px) {
@@ -695,7 +699,7 @@ h3 {
 
 .service-card-photo {
   object-fit: cover;
-  transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  transition: transform 450ms ease-out;
 }
 
 .service-card:hover .service-card-photo {
@@ -741,8 +745,9 @@ h3 {
   text-decoration: none;
   text-underline-offset: 4px;
   transition:
-    color 200ms ease,
-    gap 200ms ease;
+    color 300ms ease-out,
+    gap 300ms ease-out,
+    text-decoration-color 300ms ease-out;
 }
 
 .service-card-link:hover {
@@ -754,7 +759,7 @@ h3 {
 .service-card-arrow {
   width: 0.9rem;
   height: 0.9rem;
-  transition: transform 200ms ease;
+  transition: transform 300ms ease-out;
 }
 
 .service-card-link:hover .service-card-arrow {
@@ -814,9 +819,9 @@ h3 {
   background: var(--bg-alt);
   box-shadow: 0 3px 12px rgba(10, 27, 92, 0.035);
   transition:
-    transform 300ms ease,
-    box-shadow 300ms ease,
-    border-color 300ms ease;
+    transform 350ms ease-out,
+    box-shadow 350ms ease-out,
+    border-color 350ms ease-out;
 }
 
 .editorial-index {
@@ -905,9 +910,9 @@ h3 {
   background: var(--bg-alt);
   box-shadow: 0 3px 12px rgba(10, 27, 92, 0.035);
   transition:
-    transform 300ms ease,
-    box-shadow 300ms ease,
-    border-color 300ms ease;
+    transform 350ms ease-out,
+    box-shadow 350ms ease-out,
+    border-color 350ms ease-out;
 }
 
 .val:hover {
@@ -953,6 +958,69 @@ h3 {
     min-height: 0;
     padding: 1.2rem;
   }
+
+  .service-card {
+    flex-basis: min(86%, 320px);
+  }
+
+  .cta {
+    width: 100%;
+  }
+
+  .cta > .btn,
+  .actions > .btn {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .big-link,
+  .mail,
+  .site-footer a,
+  .facts a {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrap {
+    padding-inline: 1rem;
+  }
+
+  .bar {
+    min-height: 62px;
+  }
+
+  .brand-word {
+    font-size: clamp(0.72rem, 3.4vw, 0.9rem);
+  }
+
+  .home-hero-wrap {
+    padding-top: 2.75rem;
+  }
+
+  .home-hero h1 {
+    font-size: clamp(2.25rem, 12vw, 3.25rem);
+  }
+
+  .hero h1,
+  .section h2,
+  .cta-band h2 {
+    letter-spacing: -0.03em;
+  }
+
+  .big-link {
+    font-size: clamp(1.35rem, 7vw, 1.8rem);
+    line-height: 1.2;
+  }
+
+  .panel {
+    padding: 1.1rem;
+  }
+
+  .group {
+    margin-top: 1.5rem;
+  }
 }
 
 .faq {
@@ -977,6 +1045,11 @@ h3 {
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
+  transition: color 300ms ease-out;
+}
+
+.faq summary:hover {
+  color: var(--link);
 }
 
 .faq summary::-webkit-details-marker {
@@ -988,7 +1061,7 @@ h3 {
   height: 1.1rem;
   color: var(--link);
   flex: none;
-  transition: transform 220ms ease;
+  transition: transform 300ms ease-out;
 }
 
 .faq details[open] .faq-chevron {
@@ -1080,6 +1153,7 @@ h3 {
   font-weight: 700;
   font-size: clamp(1.6rem, 4.4vw, 2.3rem);
   line-height: 1.25;
+  transition: color 300ms ease-out;
 }
 
 .big-link:hover {
@@ -1091,6 +1165,7 @@ h3 {
   font-weight: 600;
   font-size: 1.2rem;
   text-underline-offset: 4px;
+  transition: color 300ms ease-out;
 }
 
 .mail:hover {
@@ -1112,6 +1187,9 @@ address {
   font-weight: 700;
   text-underline-offset: 4px;
   text-decoration-thickness: 2px;
+  transition:
+    color 300ms ease-out,
+    text-decoration-color 300ms ease-out;
 }
 
 .map-link svg {
@@ -1162,6 +1240,17 @@ address {
   color: #fff;
   background: rgba(255, 255, 255, 0.08);
   border: 1.5px solid rgba(255, 255, 255, 0.3);
+  transition:
+    background-color 300ms ease-out,
+    border-color 300ms ease-out,
+    box-shadow 300ms ease-out;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(245, 168, 28, 0.18);
 }
 
 .field textarea {
@@ -1275,9 +1364,9 @@ address {
     transform: translateY(-8px);
     pointer-events: none;
     transition:
-      opacity 220ms ease,
-      transform 220ms ease,
-      visibility 0s linear 220ms;
+      opacity 300ms ease-out,
+      transform 300ms ease-out,
+      visibility 0s linear 300ms;
   }
 
   .nav.open {
@@ -1286,8 +1375,8 @@ address {
     transform: translateY(0);
     pointer-events: auto;
     transition:
-      opacity 220ms ease,
-      transform 220ms ease,
+      opacity 300ms ease-out,
+      transform 300ms ease-out,
       visibility 0s;
   }
 
@@ -1321,5 +1410,6 @@ address {
     scroll-behavior: auto !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

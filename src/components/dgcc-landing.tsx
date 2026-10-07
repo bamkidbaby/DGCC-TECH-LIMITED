@@ -42,9 +42,7 @@ function aosProps(animation: AosAnimation, options: AosOptions = {}) {
     ...(options.offset === undefined
       ? {}
       : { "data-aos-offset": options.offset }),
-    ...(options.once === undefined
-      ? {}
-      : { "data-aos-once": options.once }),
+    ...(options.once === undefined ? {} : { "data-aos-once": options.once }),
     ...(options.easing === undefined
       ? {}
       : { "data-aos-easing": options.easing }),
@@ -231,21 +229,24 @@ const pageHeroes: Record<
     image: "/images/services/web-development.jpg",
     imageAlt: "Professional website development work in progress",
     primary: { label: "Request a service", href: "/contact" },
-    secondary: { label: "Call our team", href: "tel:+2347082523166" },
+    secondary: { label: "Call our team", href: "tel:+2347045371328" },
   },
   contact: {
     eyebrow: "Here when you need us",
     title: "Get in touch",
     description:
       "Call, message or visit. Tell us what you need and we will tell you how we can help.",
-    image: "/images/services/it-support.jpg",
-    imageAlt: "IT professional helping a client with a laptop",
+    image: "/images/contact-reception.jpg",
+    imageAlt: "Bright, modern office reception and client waiting area",
     primary: {
-      label: "Call +234 708 252 3166",
-      href: "tel:+2347082523166",
+      label: "Call +234 704 537 1328",
+      href: "tel:+2347045371328",
       phone: true,
     },
-    secondary: { label: "Email our team", href: "mailto:dgcctech@gmail.com" },
+    secondary: {
+      label: "Email our team",
+      href: "mailto:support@dgcctechltd.com",
+    },
   },
 };
 
@@ -321,9 +322,9 @@ function HomeHero() {
               and excellent support.
             </p>
             <div className="cta">
-              <a className="btn btn-gold" href="tel:+2347082523166">
+              <a className="btn btn-gold" href="tel:+2347045371328">
                 <FaPhone aria-hidden="true" focusable="false" />
-                Call +234 708 252 3166
+                Call +234 704 537 1328
               </a>
               <Link className="btn btn-ghost" href="/services">
                 See what we do
@@ -504,12 +505,12 @@ export default function DgccLanding({
 
   const whatsappHref = useMemo(() => {
     const text = `Hello DGCC Tech,${name ? ` my name is ${name}.` : ""}\nI am interested in: ${service}.${message ? `\n\n${message}` : ""}`;
-    return `https://wa.me/2347082523166?text=${encodeURIComponent(text)}`;
+    return `https://wa.me/2347045371328?text=${encodeURIComponent(text)}`;
   }, [name, message, service]);
 
   const emailHref = useMemo(() => {
     const text = `Hello DGCC Tech,${name ? ` my name is ${name}.` : ""}\nI am interested in: ${service}.${message ? `\n\n${message}` : ""}`;
-    return `mailto:dgcctech@gmail.com?subject=${encodeURIComponent(`Enquiry: ${service}`)}&body=${encodeURIComponent(text)}`;
+    return `mailto:support@dgcctechltd.com?subject=${encodeURIComponent(`Enquiry: ${service}`)}&body=${encodeURIComponent(text)}`;
   }, [name, message, service]);
 
   return (
@@ -517,31 +518,14 @@ export default function DgccLanding({
       <header className="site-header navy">
         <div className="wrap bar">
           <Link className="brand" href="/" aria-label="DGCC Tech Limited, home">
-            <svg viewBox="0 0 48 48" aria-hidden="true">
-              <circle
-                cx="24"
-                cy="24"
-                r="18"
-                fill="none"
-                stroke="#3D6BFF"
-                strokeWidth="7"
-              />
-              <circle
-                cx="24"
-                cy="24"
-                r="18"
-                fill="none"
-                stroke="#F5A81C"
-                strokeWidth="7"
-                strokeDasharray="62 200"
-                transform="rotate(-60 24 24)"
-              />
-              <circle cx="24" cy="24" r="4" fill="#fff" />
-            </svg>
-            <span className="brand-word">
-              <span>DGCC</span>
-              <span>TECH</span>
-            </span>
+            <Image
+              src="/images/logo.png"
+              alt=""
+              width={40}
+              height={40}
+              priority
+            />
+            <span className="brand-word">DGCC TECH LTD</span>
           </Link>
 
           <nav
@@ -579,7 +563,7 @@ export default function DgccLanding({
             </Link>
           </nav>
 
-          <a className="btn btn-gold btn-sm" href="tel:+2347082523166">
+          <a className="btn btn-gold btn-sm" href="tel:+2347045371328">
             <FaPhone aria-hidden="true" focusable="false" />
             Call us
           </a>
@@ -620,10 +604,13 @@ export default function DgccLanding({
                     <article
                       className="service-card"
                       key={offering.id}
-                      {...aosProps(cardAnimations[index % cardAnimations.length], {
-                        delay: (index % cardAnimations.length) * 70,
-                        duration: 600,
-                      })}
+                      {...aosProps(
+                        cardAnimations[index % cardAnimations.length],
+                        {
+                          delay: (index % cardAnimations.length) * 70,
+                          duration: 600,
+                        },
+                      )}
                     >
                       <Link
                         className="service-card-image"
@@ -659,18 +646,22 @@ export default function DgccLanding({
                 <div {...aosProps("fade-right")}>
                   <h2>One team for the whole chain</h2>
                 </div>
-                <div className="prose" {...aosProps("fade-left", { delay: 80 })}>
+                <div
+                  className="prose"
+                  {...aosProps("fade-left", { delay: 80 })}
+                >
                   <p>
                     A new website needs a logo. A logo needs printing. A growing
-                    business needs its data protected. At DGCC Tech those jobs
-                    sit under one roof, so nothing gets lost between suppliers.
+                    business needs its data protected. At DGCC Tech LTD those
+                    jobs sit under one roof, so nothing gets lost between
+                    suppliers.
                   </p>
                   <p>
                     Walk into our office in Oke-aro Matogun, or work with us
                     remotely from anywhere in the world.
                   </p>
                   <Link className="textlink" href="/about">
-                    About DGCC Tech
+                    About DGCC Tech LTD
                   </Link>
                 </div>
               </div>
@@ -725,13 +716,15 @@ export default function DgccLanding({
                   <div>
                     <dt>Phone</dt>
                     <dd>
-                      <a href="tel:+2347082523166">+234 708 252 3166</a>
+                      <a href="tel:+2347045371328">+234 704 537 1328</a>
                     </dd>
                   </div>
                   <div>
                     <dt>Email</dt>
                     <dd>
-                      <a href="mailto:dgcctech@gmail.com">dgcctech@gmail.com</a>
+                      <a href="mailto:support@dgcctechltd.com">
+                        support@dgcctechltd.com
+                      </a>
                     </dd>
                   </div>
                 </dl>
@@ -823,7 +816,10 @@ export default function DgccLanding({
                 <div className="section-head" {...aosProps("fade-left")}>
                   <h2>Who we work with</h2>
                 </div>
-                <ul className="chips" {...aosProps("fade-right", { delay: 80 })}>
+                <ul
+                  className="chips"
+                  {...aosProps("fade-right", { delay: 80 })}
+                >
                   <li>Businesses and offices</li>
                   <li>Schools</li>
                   <li>Online sellers</li>
@@ -847,10 +843,13 @@ export default function DgccLanding({
                       className="service-card"
                       key={offering.id}
                       id={offering.id}
-                      {...aosProps(cardAnimations[index % cardAnimations.length], {
-                        delay: (index % cardAnimations.length) * 70,
-                        duration: 600,
-                      })}
+                      {...aosProps(
+                        cardAnimations[index % cardAnimations.length],
+                        {
+                          delay: (index % cardAnimations.length) * 70,
+                          duration: 600,
+                        },
+                      )}
                     >
                       <div className="service-card-image">
                         <Image
@@ -900,10 +899,13 @@ export default function DgccLanding({
                     <article
                       className="service-card"
                       key={offering.service}
-                      {...aosProps(cardAnimations[(index + 1) % cardAnimations.length], {
-                        delay: index * 70,
-                        duration: 600,
-                      })}
+                      {...aosProps(
+                        cardAnimations[(index + 1) % cardAnimations.length],
+                        {
+                          delay: index * 70,
+                          duration: 600,
+                        },
+                      )}
                     >
                       <div className="service-card-image">
                         <Image
@@ -949,9 +951,6 @@ export default function DgccLanding({
                   <div {...aosProps("fade-right")}>
                     <div className="group">
                       <span className="label">Phone and WhatsApp</span>
-                      <a className="big-link" href="tel:+2347082523166">
-                        +234 708 252 3166
-                      </a>
                       <a className="big-link" href="tel:+2347045371328">
                         +234 704 537 1328
                       </a>
@@ -1067,10 +1066,13 @@ export default function DgccLanding({
                   {faqs.map(({ question, answer }, index) => (
                     <details
                       key={question}
-                      {...aosProps(cardAnimations[index % cardAnimations.length], {
-                        delay: (index % cardAnimations.length) * 55,
-                        duration: 600,
-                      })}
+                      {...aosProps(
+                        cardAnimations[index % cardAnimations.length],
+                        {
+                          delay: (index % cardAnimations.length) * 55,
+                          duration: 600,
+                        },
+                      )}
                     >
                       <summary>
                         {question}
@@ -1090,13 +1092,12 @@ export default function DgccLanding({
         )}
 
         {page !== "contact" && (
-          <section
-            className="cta-band navy"
-            id="ctaBand"
-            {...aosProps("zoom-in", { duration: 650 })}
-          >
-            <div className="wrap cta-inner">
-              <div>
+          <section className="cta-band navy" id="ctaBand">
+            <div
+              className="wrap cta-inner"
+              {...aosProps("zoom-in", { duration: 650 })}
+            >
+              <div {...aosProps("zoom-in", { delay: 100, duration: 650 })}>
                 <h2>Have a project in mind?</h2>
                 <p>
                   Tell us what you need. We will point you to the right service
@@ -1108,9 +1109,9 @@ export default function DgccLanding({
                   Contact us
                   <FaArrowRight aria-hidden="true" focusable="false" />
                 </Link>
-                <a className="btn btn-ghost" href="tel:+2347082523166">
+                <a className="btn btn-ghost" href="tel:+2347045371328">
                   <FaPhone aria-hidden="true" focusable="false" />
-                  Call +234 708 252 3166
+                  Call +234 704 537 1328
                 </a>
               </div>
             </div>
@@ -1140,14 +1141,15 @@ export default function DgccLanding({
           <div {...aosProps("fade-up", { delay: 130, duration: 600 })}>
             <h2>Reach us</h2>
             <div className="foot-links">
-              <a href="tel:+2347082523166">+234 708 252 3166</a>
               <a href="tel:+2347045371328">+234 704 537 1328</a>
-              <a href="mailto:support@dgcctech.com">support@dgcctechltd.com</a>
+              <a href="mailto:support@dgcctechltd.com">
+                support@dgcctechltd.com
+              </a>
             </div>
           </div>
         </div>
         <div className="wrap legal">
-          &copy; 2026 DGCC Tech Limited. BN 3520720.
+          &copy; 2026 DGCC Tech Limited.
         </div>
       </footer>
     </>
