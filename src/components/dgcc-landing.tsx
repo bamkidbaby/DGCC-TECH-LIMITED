@@ -121,6 +121,15 @@ const serviceOfferings: Array<{
     category: "Digital service",
   },
   {
+    id: "svc-cyber",
+    label: "Cyber security",
+    description:
+      "Protect your website, your data and your inbox before something goes wrong.",
+    image: "/images/services/cyber-security.jpg",
+    imageAlt: "Detailed illuminated computer circuit board",
+    category: "Security",
+  },
+  {
     id: "svc-it",
     label: "Computer Engineering and IT support",
     description:
@@ -138,15 +147,7 @@ const serviceOfferings: Array<{
     imageAlt: "Color palette and digital design work on a tablet",
     category: "Creative service",
   },
-  {
-    id: "svc-cyber",
-    label: "Cyber security",
-    description:
-      "Protect your website, your data and your inbox before something goes wrong.",
-    image: "/images/services/cyber-security.jpg",
-    imageAlt: "Detailed illuminated computer circuit board",
-    category: "Security",
-  },
+
   {
     id: "svc-print",
     label: "General Printing",
@@ -172,7 +173,7 @@ const additionalOfferings = [
     title: "Desktop and Laptop Sales",
     description: "Genuine desktop and laptop devices selected for your needs.",
     image: "/images/services/computer-sales.jpg",
-    imageAlt: "Laptop displayed on a clean workstation",
+    imageAlt: "Desktop computers and laptops displayed with computer equipment",
     service: "Desktop and laptop sales",
     cta: "Ask about devices",
     category: "Devices",
@@ -1149,7 +1150,7 @@ export default function DgccLanding({
           </div>
         </div>
         <div className="wrap legal">
-          &copy; 2026 DGCC Tech Limited.
+          &copy; {new Date().getFullYear()} DGCC Tech Limited.
         </div>
       </footer>
     </>
