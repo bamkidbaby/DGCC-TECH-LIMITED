@@ -14,21 +14,21 @@ export default async function ContactPage({
 }) {
   const { service } = await searchParams;
   const serviceOptions = [
-    "Website design and development",
-    "Computer engineering and IT support",
-    "Graphic designing and branding",
+    "Website Design and Development",
     "Cyber security",
-    "General printing and merchandising",
+    "Computer Engineering and IT support",
+    "Branding and Graphic designing",
+    "General Printing",
     "Tech training",
-    "Desktop and laptop sales",
-    "Computer accessories sales",
-    "Online registrations",
+    "Desktop and Laptop Sales",
+    "Computer Accessories",
     "IT consultancy",
+    "Online Registrations",
     "Something else",
   ];
   const initialService =
     serviceOptions.find((option) => option === service) ??
-    "Website design and development";
+    "Website Design and Development";
 
   return (
     <DgccLanding

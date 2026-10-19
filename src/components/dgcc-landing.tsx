@@ -6,49 +6,18 @@ import Image from "next/image";
 import {
   FaArrowRight,
   FaArrowUpRightFromSquare,
-  FaBars,
   FaCheck,
   FaChevronLeft,
   FaChevronRight,
   FaChevronDown,
   FaPhone,
-  FaXmark,
 } from "react-icons/fa6";
+import { aosProps, type AosAnimation } from "@/lib/aos";
+import { contactDetails, createWhatsAppHref } from "@/lib/contact";
+import { services } from "@/lib/services";
 
 type DgccPage = "home" | "about" | "services" | "contact";
 type InnerPage = Exclude<DgccPage, "home">;
-type AosAnimation =
-  | "fade-up"
-  | "fade-down"
-  | "fade-left"
-  | "fade-right"
-  | "zoom-in"
-  | "zoom-in-up"
-  | "zoom-in-down";
-
-type AosOptions = {
-  delay?: number;
-  duration?: number;
-  offset?: number;
-  once?: boolean;
-  easing?: string;
-};
-
-function aosProps(animation: AosAnimation, options: AosOptions = {}) {
-  return {
-    "data-aos": animation,
-    "data-aos-delay": options.delay ?? 0,
-    "data-aos-duration": options.duration ?? 650,
-    ...(options.offset === undefined
-      ? {}
-      : { "data-aos-offset": options.offset }),
-    ...(options.once === undefined ? {} : { "data-aos-once": options.once }),
-    ...(options.easing === undefined
-      ? {}
-      : { "data-aos-easing": options.easing }),
-  };
-}
-
 const cardAnimations: AosAnimation[] = [
   "fade-up",
   "fade-left",
@@ -103,102 +72,7 @@ const faqs = [
   },
 ] as const;
 
-const serviceOfferings: Array<{
-  id: string;
-  label: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  category: string;
-}> = [
-  {
-    id: "svc-web",
-    label: "Website Design and Development",
-    description:
-      "We build fast, modern, mobile-friendly websites that look right and load quickly on every screen.",
-    image: "/images/services/web-development.jpg",
-    imageAlt: "Developers collaborating at a table with open laptops",
-    category: "Digital service",
-  },
-  {
-    id: "svc-cyber",
-    label: "Cyber security",
-    description:
-      "Protect your website, your data and your inbox before something goes wrong.",
-    image: "/images/services/cyber-security.jpg",
-    imageAlt: "Detailed illuminated computer circuit board",
-    category: "Security",
-  },
-  {
-    id: "svc-it",
-    label: "Computer Engineering and IT support",
-    description:
-      "Hands-on repairs and setups for offices and homes, plus remote IT support for clients anywhere in the world.",
-    image: "/images/services/it-support.jpg",
-    imageAlt: "Technician pointing at a laptop while helping a client",
-    category: "Technical support",
-  },
-  {
-    id: "svc-brand",
-    label: "Branding and Graphic designing",
-    description:
-      "Give your business a look people remember, on screen and on paper.",
-    image: "/images/services/branding.jpg",
-    imageAlt: "Color palette and digital design work on a tablet",
-    category: "Creative service",
-  },
-
-  {
-    id: "svc-print",
-    label: "General Printing",
-    description:
-      "Design and print in one place, from a single business card to a full branded merchandise run.",
-    image: "/images/services/printing.jpg",
-    imageAlt: "Professional multifunction printer ready for printing",
-    category: "Print and merchandise",
-  },
-  {
-    id: "svc-train",
-    label: "Tech training",
-    description:
-      "Practical, hands-on classes in person or online. Every course ends with a certificate.",
-    image: "/images/services/tech-training.jpg",
-    imageAlt: "Instructor leading a professional classroom training session",
-    category: "Training",
-  },
-];
-
-const additionalOfferings = [
-  {
-    title: "Desktop and Laptop Sales",
-    description: "Genuine desktop and laptop devices selected for your needs.",
-    image: "/images/services/computer-sales.jpg",
-    imageAlt: "Desktop computers and laptops displayed with computer equipment",
-    service: "Desktop and laptop sales",
-    cta: "Ask about devices",
-    category: "Devices",
-  },
-  {
-    title: "Computer Accessories",
-    description: "Quality accessories to power and protect your technology.",
-    image: "/images/services/computer-accessories.jpg",
-    imageAlt: "Laptop computer ready for work",
-    service: "Computer accessories sales",
-    cta: "Ask about accessories",
-    category: "Accessories",
-  },
-  {
-    title: "IT consultancy",
-    description: "Expert advice and tailored IT solutions for your business.",
-    image: "/images/services/it-consultancy.jpg",
-    imageAlt: "Colleagues discussing a technology project in a workspace",
-    service: "IT consultancy",
-    cta: "Book advice",
-    category: "Consultancy",
-  },
-] as const;
-
-const defaultService = "Website design and development";
+const defaultService = "Website Design and Development";
 
 const pageHeroes: Record<
   InnerPage,
@@ -218,7 +92,7 @@ const pageHeroes: Record<
     description:
       "We connect people, businesses and schools to technology that works, and to the people who keep it working.",
     image: "/images/services/it-consultancy.jpg",
-    imageAlt: "Technology professionals discussing a project together",
+    imageAlt: "Colleagues collaborating around a laptop in a workspace",
     primary: { label: "Explore our services", href: "/services" },
     secondary: { label: "Talk to our team", href: "/contact" },
   },
@@ -230,7 +104,7 @@ const pageHeroes: Record<
     image: "/images/services/web-development.jpg",
     imageAlt: "Professional website development work in progress",
     primary: { label: "Request a service", href: "/contact" },
-    secondary: { label: "Call our team", href: "tel:+2347045371328" },
+    secondary: { label: "Call our team", href: contactDetails.phoneHref },
   },
   contact: {
     eyebrow: "Here when you need us",
@@ -238,15 +112,15 @@ const pageHeroes: Record<
     description:
       "Call, message or visit. Tell us what you need and we will tell you how we can help.",
     image: "/images/contact-reception.jpg",
-    imageAlt: "Bright, modern office reception and client waiting area",
+    imageAlt: "Modern office reception and client waiting area",
     primary: {
       label: "Call +234 704 537 1328",
-      href: "tel:+2347045371328",
+      href: contactDetails.phoneHref,
       phone: true,
     },
     secondary: {
       label: "Email our team",
-      href: "mailto:support@dgcctechltd.com",
+      href: `mailto:${contactDetails.email}`,
     },
   },
 };
@@ -323,17 +197,22 @@ function HomeHero() {
               and excellent support.
             </p>
             <div className="cta">
-              <a className="btn btn-gold" href="tel:+2347045371328">
-                <FaPhone aria-hidden="true" focusable="false" />
-                Call +234 704 537 1328
+              <a
+                className="btn btn-gold"
+                href={createWhatsAppHref(
+                  "Hello DGCC Tech, I would like to discuss a project.",
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Chat on WhatsApp
               </a>
-              <Link className="btn btn-ghost" href="/services">
-                See what we do
+              <Link className="btn btn-ghost" href="/contact">
+                Request a Project
               </Link>
             </div>
             <p className="hero-note">
-              Based in Oke-aro, Ogun State. Remote IT support for clients
-              worldwide.
+              {contactDetails.address} Remote IT support for clients worldwide.
             </p>
           </div>
 
@@ -357,8 +236,8 @@ function HomeHero() {
                   DGCC
                 </text>
               </g>
-              <a
-                href="/services#svc-web"
+              <Link
+                href="/services/website-design-development"
                 aria-label="Website design and development"
               >
                 <circle
@@ -370,17 +249,20 @@ function HomeHero() {
                 <text x="124" y="96" textAnchor="end">
                   Websites
                 </text>
-              </a>
-              <a
-                href="/services#svc-brand"
+              </Link>
+              <Link
+                href="/services/branding-graphic-design"
                 aria-label="Branding and graphic design"
               >
                 <circle className="home-network-node" cx="390" cy="76" r="10" />
                 <text x="410" y="68">
                   Branding
                 </text>
-              </a>
-              <a href="/services#svc-print" aria-label="Printing services">
+              </Link>
+              <Link
+                href="/services/general-printing"
+                aria-label="Printing services"
+              >
                 <circle
                   className="home-network-node"
                   cx="478"
@@ -390,8 +272,8 @@ function HomeHero() {
                 <text x="498" y="232">
                   Printing
                 </text>
-              </a>
-              <a href="/services#svc-train" aria-label="Tech training">
+              </Link>
+              <Link href="/services/tech-training" aria-label="Tech training">
                 <circle
                   className="home-network-node"
                   cx="430"
@@ -401,8 +283,8 @@ function HomeHero() {
                 <text x="450" y="422">
                   Training
                 </text>
-              </a>
-              <a href="/services#svc-cyber" aria-label="Cyber security">
+              </Link>
+              <Link href="/services/cyber-security" aria-label="Cyber security">
                 <circle
                   className="home-network-node"
                   cx="190"
@@ -412,8 +294,11 @@ function HomeHero() {
                 <text x="174" y="466" textAnchor="end">
                   Cyber security
                 </text>
-              </a>
-              <a href="/services#svc-it" aria-label="IT support">
+              </Link>
+              <Link
+                href="/services/computer-engineering-it-support"
+                aria-label="IT support"
+              >
                 <circle
                   className="home-network-node"
                   cx="110"
@@ -423,7 +308,7 @@ function HomeHero() {
                 <text x="90" y="292" textAnchor="end">
                   IT support
                 </text>
-              </a>
+              </Link>
             </svg>
           </div>
         </div>
@@ -499,93 +384,22 @@ export default function DgccLanding({
   page: DgccPage;
   initialService?: string;
 }) {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [name, setName] = useState("");
   const [service, setService] = useState(initialService);
   const [message, setMessage] = useState("");
 
   const whatsappHref = useMemo(() => {
     const text = `Hello DGCC Tech,${name ? ` my name is ${name}.` : ""}\nI am interested in: ${service}.${message ? `\n\n${message}` : ""}`;
-    return `https://wa.me/2347045371328?text=${encodeURIComponent(text)}`;
+    return createWhatsAppHref(text);
   }, [name, message, service]);
 
   const emailHref = useMemo(() => {
     const text = `Hello DGCC Tech,${name ? ` my name is ${name}.` : ""}\nI am interested in: ${service}.${message ? `\n\n${message}` : ""}`;
-    return `mailto:support@dgcctechltd.com?subject=${encodeURIComponent(`Enquiry: ${service}`)}&body=${encodeURIComponent(text)}`;
+    return `mailto:${contactDetails.email}?subject=${encodeURIComponent(`Enquiry: ${service}`)}&body=${encodeURIComponent(text)}`;
   }, [name, message, service]);
 
   return (
     <>
-      <header className="site-header navy">
-        <div className="wrap bar">
-          <Link className="brand" href="/" aria-label="DGCC Tech Limited, home">
-            <Image
-              src="/images/logo.png"
-              alt=""
-              width={40}
-              height={40}
-              priority
-            />
-            <span className="brand-word">DGCC TECH LTD</span>
-          </Link>
-
-          <nav
-            className={`nav ${menuOpen ? "open" : ""}`}
-            id="nav"
-            aria-label="Main"
-          >
-            <Link
-              href="/"
-              aria-current={page === "home" ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              aria-current={page === "about" ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              About us
-            </Link>
-            <Link
-              href="/services"
-              aria-current={page === "services" ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              Services
-            </Link>
-            <Link
-              href="/contact"
-              aria-current={page === "contact" ? "page" : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              Contact
-            </Link>
-          </nav>
-
-          <a className="btn btn-gold btn-sm" href="tel:+2347045371328">
-            <FaPhone aria-hidden="true" focusable="false" />
-            Call us
-          </a>
-          <button
-            className="menu-btn"
-            id="menuBtn"
-            type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls="nav"
-            onClick={() => setMenuOpen((current) => !current)}
-          >
-            {menuOpen ? (
-              <FaXmark aria-hidden="true" focusable="false" />
-            ) : (
-              <FaBars aria-hidden="true" focusable="false" />
-            )}
-          </button>
-        </div>
-      </header>
-
       <main>
         {page === "home" && (
           <div className="page">
@@ -601,7 +415,7 @@ export default function DgccLanding({
                   </p>
                 </div>
                 <ServiceCarousel>
-                  {serviceOfferings.map((offering, index) => (
+                  {services.slice(0, 6).map((offering, index) => (
                     <article
                       className="service-card"
                       key={offering.id}
@@ -615,8 +429,8 @@ export default function DgccLanding({
                     >
                       <Link
                         className="service-card-image"
-                        href={`/services#${offering.id}`}
-                        aria-label={`Learn about ${offering.label}`}
+                        href={`/services/${offering.slug}`}
+                        aria-label={`Learn about ${offering.cardTitle}`}
                       >
                         <Image
                           src={offering.image}
@@ -630,7 +444,7 @@ export default function DgccLanding({
                         <span className="service-eyebrow">
                           {offering.category}
                         </span>
-                        <h3>{offering.label}</h3>
+                        <h3>{offering.cardTitle}</h3>
                         <p>{offering.description}</p>
                       </div>
                     </article>
@@ -658,8 +472,8 @@ export default function DgccLanding({
                     suppliers.
                   </p>
                   <p>
-                    Walk into our office in Oke-aro Matogun, or work with us
-                    remotely from anywhere in the world.
+                    Our listed location is {contactDetails.address} We also
+                    work remotely with clients around the world.
                   </p>
                   <Link className="textlink" href="/about">
                     About DGCC Tech LTD
@@ -679,10 +493,10 @@ export default function DgccLanding({
                 <div className="prose" {...aosProps("fade-right")}>
                   <h2 style={{ marginBottom: "1.5rem" }}>Who we are</h2>
                   <p>
-                    DGCC Tech Limited is a technology company based in Oke-aro
-                    Matogun, Ogun State. We build websites, repair and support
-                    computers, design brands, secure data, print merchandise and
-                    train people in tech.
+                    DGCC Tech Limited is a technology company based at{" "}
+                    {contactDetails.address} We build websites, repair and
+                    support computers, design brands, secure data, print
+                    merchandise and train people in tech.
                   </p>
                   <p>
                     Most tech problems do not sit in a single box. A website
@@ -708,7 +522,7 @@ export default function DgccLanding({
                   </div>
                   <div>
                     <dt>Based in</dt>
-                    <dd>Oke-aro Matogun, Ogun State</dd>
+                    <dd>{contactDetails.address}</dd>
                   </div>
                   <div>
                     <dt>Works with</dt>
@@ -717,14 +531,16 @@ export default function DgccLanding({
                   <div>
                     <dt>Phone</dt>
                     <dd>
-                      <a href="tel:+2347045371328">+234 704 537 1328</a>
+                      <a href={contactDetails.phoneHref}>
+                        {contactDetails.phoneDisplay}
+                      </a>
                     </dd>
                   </div>
                   <div>
                     <dt>Email</dt>
                     <dd>
-                      <a href="mailto:support@dgcctechltd.com">
-                        support@dgcctechltd.com
+                      <a href={`mailto:${contactDetails.email}`}>
+                        {contactDetails.email}
                       </a>
                     </dd>
                   </div>
@@ -839,7 +655,7 @@ export default function DgccLanding({
             <section className="section">
               <div className="wrap">
                 <ServiceCarousel>
-                  {serviceOfferings.map((offering, index) => (
+                  {services.slice(0, 6).map((offering, index) => (
                     <article
                       className="service-card"
                       key={offering.id}
@@ -866,13 +682,13 @@ export default function DgccLanding({
                         <span className="service-eyebrow">
                           {offering.category}
                         </span>
-                        <h2>{offering.label}</h2>
+                        <h2>{offering.cardTitle}</h2>
                         <p>{offering.description}</p>
                         <Link
                           className="service-card-link"
-                          href={`/contact?service=${encodeURIComponent(offering.label)}`}
+                          href={`/services/${offering.slug}`}
                         >
-                          Request this service{" "}
+                          Learn about this service{" "}
                           <FaArrowRight
                             className="service-card-arrow"
                             aria-hidden="true"
@@ -896,10 +712,10 @@ export default function DgccLanding({
                   </p>
                 </div>
                 <ServiceCarousel>
-                  {additionalOfferings.map((offering, index) => (
+                  {services.slice(6).map((offering, index) => (
                     <article
                       className="service-card"
-                      key={offering.service}
+                      key={offering.slug}
                       {...aosProps(
                         cardAnimations[(index + 1) % cardAnimations.length],
                         {
@@ -921,13 +737,13 @@ export default function DgccLanding({
                         <span className="service-eyebrow">
                           {offering.category}
                         </span>
-                        <h3>{offering.title}</h3>
+                        <h3>{offering.cardTitle}</h3>
                         <p>{offering.description}</p>
                         <Link
                           className="service-card-link"
-                          href={`/contact?service=${encodeURIComponent(offering.service)}`}
+                          href={`/services/${offering.slug}`}
                         >
-                          {offering.cta}{" "}
+                          Learn about this service{" "}
                           <FaArrowRight
                             className="service-card-arrow"
                             aria-hidden="true"
@@ -952,29 +768,43 @@ export default function DgccLanding({
                   <div {...aosProps("fade-right")}>
                     <div className="group">
                       <span className="label">Phone and WhatsApp</span>
-                      <a className="big-link" href="tel:+2347045371328">
-                        +234 704 537 1328
+                      <a className="big-link" href={contactDetails.phoneHref}>
+                        {contactDetails.phoneDisplay}
+                      </a>
+                      <a
+                        className="map-link"
+                        href={createWhatsAppHref(
+                          "Hello DGCC Tech, I would like to make an enquiry.",
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Chat on WhatsApp
                       </a>
                     </div>
                     <div className="group">
                       <span className="label">Email</span>
-                      <a className="mail" href="mailto:support@dgcctechltd.com">
-                        support@dgcctechltd.com
+                      <a
+                        className="mail"
+                        href={`mailto:${contactDetails.email}`}
+                      >
+                        {contactDetails.email}
                       </a>
                     </div>
                     <div className="group">
-                      <span className="label">Visit us</span>
-                      <address>
-                        3 Akinguroye Street, Toluwalase Estate ASB Bus Stop
-                        <br />
-                        8, Badiru Street, off Arolambo Road, Oke-aro Matogun,
-                        Ogun State
-                      </address>
+                      <span className="label">Address listed for DGCC Tech</span>
+                      <address>{contactDetails.address}</address>
+                      <p className="contact-confirmation">
+                        Please confirm this address before visiting. An older
+                        site listing also included 8, Badiru Street, off
+                        Arolambo Road, Oke-aro Matogun; whether that is an
+                        additional business location is unconfirmed.
+                      </p>
                       <a
                         className="map-link"
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://www.google.com/maps/search/?api=1&query=Akinguroye+Street+Toluwalase+Estate+Oke-aro+Matogun+Ogun+State"
+                        href={contactDetails.mapsHref}
                       >
                         Open in Google Maps
                         <FaArrowUpRightFromSquare
@@ -1013,16 +843,16 @@ export default function DgccLanding({
                         value={service}
                         onChange={(event) => setService(event.target.value)}
                       >
-                        <option>Website design and development</option>
-                        <option>Computer engineering and IT support</option>
-                        <option>Graphic designing and branding</option>
+                        <option>Website Design and Development</option>
                         <option>Cyber security</option>
-                        <option>General printing and merchandising</option>
+                        <option>Computer Engineering and IT support</option>
+                        <option>Branding and Graphic designing</option>
+                        <option>General Printing</option>
                         <option>Tech training</option>
-                        <option>Desktop and laptop sales</option>
-                        <option>Computer accessories sales</option>
-                        <option>Online registrations</option>
+                        <option>Desktop and Laptop Sales</option>
+                        <option>Computer Accessories</option>
                         <option>IT consultancy</option>
+                        <option>Online Registrations</option>
                         <option>Something else</option>
                       </select>
                     </div>
@@ -1110,9 +940,12 @@ export default function DgccLanding({
                   Contact us
                   <FaArrowRight aria-hidden="true" focusable="false" />
                 </Link>
-                <a className="btn btn-ghost" href="tel:+2347045371328">
+                <a
+                  className="btn btn-ghost"
+                  href={contactDetails.phoneHref}
+                >
                   <FaPhone aria-hidden="true" focusable="false" />
-                  Call +234 704 537 1328
+                  Call {contactDetails.phoneDisplay}
                 </a>
               </div>
             </div>
@@ -1120,39 +953,6 @@ export default function DgccLanding({
         )}
       </main>
 
-      <footer className="site-footer">
-        <div className="wrap foot-grid">
-          <div {...aosProps("fade-up", { duration: 600 })}>
-            <p className="foot-slogan">Connecting dots in tech.</p>
-            <p>
-              DGCC Tech Limited
-              <br />
-              Oke-aro Matogun, Ogun State
-            </p>
-          </div>
-          <div {...aosProps("fade-up", { delay: 70, duration: 600 })}>
-            <h2>Pages</h2>
-            <div className="foot-links">
-              <Link href="/">Home</Link>
-              <Link href="/about">About us</Link>
-              <Link href="/services">Services</Link>
-              <Link href="/contact">Contact</Link>
-            </div>
-          </div>
-          <div {...aosProps("fade-up", { delay: 130, duration: 600 })}>
-            <h2>Reach us</h2>
-            <div className="foot-links">
-              <a href="tel:+2347045371328">+234 704 537 1328</a>
-              <a href="mailto:support@dgcctechltd.com">
-                support@dgcctechltd.com
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="wrap legal">
-          &copy; {new Date().getFullYear()} DGCC Tech Limited.
-        </div>
-      </footer>
     </>
   );
 }

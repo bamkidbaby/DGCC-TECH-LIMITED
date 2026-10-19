@@ -10,6 +10,11 @@ export default function AosInitializer() {
   useEffect(() => {
     let cancelled = false;
 
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.classList.remove("aos-enabled");
+      return;
+    }
+
     void import("aos").then(({ default: aos }) => {
       if (cancelled) {
         return;
@@ -22,13 +27,19 @@ export default function AosInitializer() {
           offset: 65,
           once: true,
           mirror: false,
-          disable: () =>
-            window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         });
         initialized.current = true;
       }
 
       aos.refreshHard();
+      document.documentElement.classList.add("aos-enabled");
+    }).catch((error: unknown) => {
+      if (cancelled) {
+        return;
+      }
+
+      document.documentElement.classList.remove("aos-enabled");
+      console.error("Failed to initialize AOS animations:", error);
     });
 
     return () => {

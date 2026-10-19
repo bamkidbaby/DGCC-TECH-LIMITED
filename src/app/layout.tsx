@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { DM_Sans, Manrope } from "next/font/google";
 import AosInitializer from "@/components/aos-initializer";
+import SiteFooter from "@/components/site-footer";
+import SiteHeader from "@/components/site-header";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -38,7 +40,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AosInitializer />
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
