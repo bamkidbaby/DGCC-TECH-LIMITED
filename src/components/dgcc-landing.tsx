@@ -471,10 +471,6 @@ export default function DgccLanding({
                     jobs sit under one roof, so nothing gets lost between
                     suppliers.
                   </p>
-                  <p>
-                    Our listed location is {contactDetails.address} We also
-                    work remotely with clients around the world.
-                  </p>
                   <Link className="textlink" href="/about">
                     About DGCC Tech LTD
                   </Link>
@@ -792,7 +788,9 @@ export default function DgccLanding({
                       </a>
                     </div>
                     <div className="group">
-                      <span className="label">Address listed for DGCC Tech</span>
+                      <span className="label">
+                        Address listed for DGCC Tech
+                      </span>
                       <address>{contactDetails.address}</address>
                       <p className="contact-confirmation">
                         Please confirm this address before visiting. An older
@@ -940,10 +938,7 @@ export default function DgccLanding({
                   Contact us
                   <FaArrowRight aria-hidden="true" focusable="false" />
                 </Link>
-                <a
-                  className="btn btn-ghost"
-                  href={contactDetails.phoneHref}
-                >
+                <a className="btn btn-ghost" href={contactDetails.phoneHref}>
                   <FaPhone aria-hidden="true" focusable="false" />
                   Call {contactDetails.phoneDisplay}
                 </a>
@@ -952,7 +947,6 @@ export default function DgccLanding({
           </section>
         )}
       </main>
-
     </>
   );
 }
