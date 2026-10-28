@@ -3,6 +3,7 @@ import { DM_Sans, Manrope } from "next/font/google";
 import AosInitializer from "@/components/aos-initializer";
 import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
+import TawkToWidget from "@/components/tawk-to-widget";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -43,6 +44,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
+        <TawkToWidget />
       </body>
     </html>
   );
