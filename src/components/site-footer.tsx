@@ -13,6 +13,14 @@ export default function SiteFooter() {
             <br />
             {contactDetails.address}
           </p>
+          <a
+            className="foot-map-link"
+            href={contactDetails.mapsHref}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Get directions
+          </a>
         </div>
         <div {...aosProps("fade-up", { delay: 70, duration: 600 })}>
           <h2>Pages</h2>
@@ -20,6 +28,8 @@ export default function SiteFooter() {
             <Link href="/">Home</Link>
             <Link href="/about">About us</Link>
             <Link href="/services">Services</Link>
+            <Link href="/portfolio">Portfolio</Link>
+            <Link href="/academy">Academy</Link>
             <Link href="/contact">Contact</Link>
           </div>
         </div>

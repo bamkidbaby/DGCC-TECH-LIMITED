@@ -1,22 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FaBars, FaPhone, FaXmark } from "react-icons/fa6";
-import { contactDetails } from "@/lib/contact";
 
 const navigation = [
   { label: "Home", href: "/" },
-  { label: "About us", href: "/about" },
+  { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Academy", href: "/academy" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
 export default function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
     <header className="site-header navy">
@@ -49,10 +57,10 @@ export default function SiteHeader() {
           })}
         </nav>
 
-        <a className="btn btn-gold btn-sm" href={contactDetails.phoneHref}>
+        <Link className="btn btn-gold btn-sm" href="/contact">
           <FaPhone aria-hidden="true" focusable="false" />
-          Call us
-        </a>
+          Start a Project
+        </Link>
         <button
           className="menu-btn"
           id="menuBtn"

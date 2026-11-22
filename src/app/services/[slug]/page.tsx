@@ -18,7 +18,7 @@ import {
   FaShieldHalved,
 } from "react-icons/fa6";
 import { aosProps } from "@/lib/aos";
-import { contactDetails, createWhatsAppHref } from "@/lib/contact";
+import { contactDetails, createWhatsAppHref, getServiceEnquiry } from "@/lib/contact";
 import { getService, services } from "@/lib/services";
 
 const serviceIcons: Record<string, IconType> = {
@@ -69,7 +69,7 @@ export default async function ServicePage({
   }
 
   const ServiceIcon = serviceIcons[service.slug];
-  const enquiryMessage = `Hello DGCC Tech, I am interested in ${service.title}. Please let me know how to get a quotation.`;
+  const enquiry = getServiceEnquiry(service.slug, service.title);
   const contactHref = `/contact?service=${encodeURIComponent(service.cardTitle)}`;
 
   return (
@@ -98,11 +98,11 @@ export default async function ServicePage({
               <div className="cta">
                 <a
                   className="btn btn-gold"
-                  href={createWhatsAppHref(enquiryMessage)}
+                  href={createWhatsAppHref(enquiry.message)}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Chat on WhatsApp
+                  {enquiry.label}
                 </a>
                 <Link className="btn btn-ghost" href={contactHref}>
                   Request a quotation
@@ -280,11 +280,11 @@ export default async function ServicePage({
             </Link>
             <a
               className="btn btn-ghost"
-              href={createWhatsAppHref(enquiryMessage)}
+              href={createWhatsAppHref(enquiry.message)}
               target="_blank"
               rel="noopener noreferrer"
             >
-              Chat on WhatsApp
+              {enquiry.label}
             </a>
           </div>
         </div>
