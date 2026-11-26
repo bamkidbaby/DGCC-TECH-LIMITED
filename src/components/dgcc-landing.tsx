@@ -1586,6 +1586,9 @@ export default function DgccLanding({
                       <a className="big-link" href={contactDetails.phoneHref}>
                         {contactDetails.phoneDisplay}
                       </a>
+                      <a className="big-link" href={contactDetails.secondPhoneHref}>
+                        {contactDetails.secondPhoneDisplay}
+                      </a>
                       <a
                         className="map-link"
                         href={createWhatsAppHref(
@@ -1599,16 +1602,22 @@ export default function DgccLanding({
                     </div>
                     <div className="group">
                       <span className="label">Email</span>
-                      <a
-                        className="mail"
-                        href={`mailto:${contactDetails.email}`}
-                      >
-                        {contactDetails.email}
-                      </a>
+                      <div className="email-list">
+                        {contactDetails.emails.map((email) => (
+                          <a
+                            key={email}
+                            className="mail"
+                            href={`mailto:${email}`}
+                          >
+                            {email}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                     <div className="group">
                       <span className="label">Office address</span>
                       <address>{contactDetails.address}</address>
+                      <address>{contactDetails.secondAddress}</address>
                       <a
                         className="map-link"
                         target="_blank"

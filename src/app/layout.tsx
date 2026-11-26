@@ -126,7 +126,7 @@ const jsonLd = {
       description: SITE_DESCRIPTION,
       slogan: SITE_TAGLINE,
       telephone: "+2347045371328",
-      email: "support@dgcctechltd.com",
+      email: "support@dgcctechsolutions.com",
       address: {
         "@type": "PostalAddress",
         streetAddress: "3, Akinguroye Street, Toluwalase Estate, ASB Bus Stop",
@@ -142,7 +142,7 @@ const jsonLd = {
       contactPoint: {
         "@type": "ContactPoint",
         telephone: "+2347045371328",
-        email: "support@dgcctechltd.com",
+        email: "support@dgcctechsolutions.com",
         contactType: "customer service",
         areaServed: "NG",
         availableLanguage: "English",

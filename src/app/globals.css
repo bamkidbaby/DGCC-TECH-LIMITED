@@ -2792,11 +2792,24 @@ h3 {
 }
 
 .mail {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   color: #fff;
   font-weight: 600;
   font-size: 1.2rem;
   text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   transition: color 300ms ease-out;
+}
+
+.email-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  min-width: 0;
 }
 
 .mail:hover {

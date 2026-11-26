@@ -12,6 +12,8 @@ export default function SiteFooter() {
             DGCC Tech Limited
             <br />
             {contactDetails.address}
+            <br />
+            {contactDetails.secondAddress}
           </p>
           <a
             className="foot-map-link"
@@ -37,7 +39,14 @@ export default function SiteFooter() {
           <h2>Reach us</h2>
           <div className="foot-links">
             <a href={contactDetails.phoneHref}>{contactDetails.phoneDisplay}</a>
-            <a href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
+            <a href={contactDetails.secondPhoneHref}>
+              {contactDetails.secondPhoneDisplay}
+            </a>
+            {contactDetails.emails.map((email) => (
+              <a key={email} href={`mailto:${email}`}>
+                {email}
+              </a>
+            ))}
           </div>
         </div>
       </div>
