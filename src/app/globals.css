@@ -2200,6 +2200,13 @@ h3 {
 }
 .home-service-pair article > div > a {
   color: var(--text);
+  text-underline-offset: 0.2em;
+  transition: color 180ms ease;
+}
+.home-service-pair article > div > a:hover,
+.home-service-pair article > div > a:focus-visible {
+  color: var(--blue);
+  text-decoration: underline;
 }
 .home-service-ledger article {
   display: grid;
