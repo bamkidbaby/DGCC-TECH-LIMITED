@@ -12,12 +12,14 @@ const statistics: Statistic[] = [
   {
     value: 10,
     label: "service areas",
-    detail: "Technology, creative and practical support services listed by DGCC TECH.",
+    detail:
+      "Technology, creative and practical support services listed by DGCC TECH.",
   },
   {
     value: 4,
     label: "training disciplines",
-    detail: "Web development, graphic design, computer engineering and cyber security.",
+    detail:
+      "Web development, graphic design, computer engineering and cyber security.",
   },
   {
     value: 2,
@@ -25,9 +27,10 @@ const statistics: Statistic[] = [
     detail: "In-person and online technology training options.",
   },
   {
-    value: 2,
-    label: "support modes",
-    detail: "Hands-on computer support and remote IT assistance.",
+    value: 7,
+    label: "years of operation",
+    detail:
+      "Providing reliable technology solutions, professional services and practical digital support since establishment.",
   },
 ];
 
@@ -58,7 +61,13 @@ function useCountUp(value: number, active: boolean) {
   return count;
 }
 
-function StatisticItem({ statistic, active }: { statistic: Statistic; active: boolean }) {
+function StatisticItem({
+  statistic,
+  active,
+}: {
+  statistic: Statistic;
+  active: boolean;
+}) {
   const count = useCountUp(statistic.value, active);
 
   return (
@@ -77,21 +86,32 @@ export default function HomeStatistics() {
   useEffect(() => {
     const element = sectionRef.current;
     if (!element || active) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setActive(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.25 });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setActive(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
     observer.observe(element);
     return () => observer.disconnect();
   }, [active]);
 
   return (
-    <section className="home-statistics" ref={sectionRef} aria-label="DGCC TECH capabilities at a glance">
+    <section
+      className="home-statistics"
+      ref={sectionRef}
+      aria-label="DGCC TECH capabilities at a glance"
+    >
       <div className="wrap home-statistics-grid">
         {statistics.map((statistic) => (
-          <StatisticItem key={statistic.label} statistic={statistic} active={active} />
+          <StatisticItem
+            key={statistic.label}
+            statistic={statistic}
+            active={active}
+          />
         ))}
       </div>
     </section>

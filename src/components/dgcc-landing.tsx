@@ -200,10 +200,12 @@ function HomeHero() {
             {...aosProps("fade-right", { duration: 700 })}
           >
             <p className="hero-eyebrow">Technology, connected</p>
-            <h1>Connecting dots in tech.</h1>
+            <h1>Tech moves Everyone</h1>
             <p className="lede">
-              Your trusted partner for smart tech solutions, innovative services
-              and excellent support.
+              From professional website development and cybersecurity to
+              computer engineering, digital branding, IT support and technology
+              products — DGCC TECH connects your business to the right
+              technology.
             </p>
             <div className="cta">
               <a
@@ -216,13 +218,13 @@ function HomeHero() {
               >
                 Chat on WhatsApp
               </a>
-              <Link className="btn btn-ghost" href="/contact">
-                Request a Project
+              <Link className="btn btn-ghost" href="/services">
+                Explore our services
               </Link>
             </div>
-            <p className="hero-note">
+            {/* <p className="hero-note">
               {contactDetails.address} Remote IT support for clients worldwide.
-            </p>
+            </p> */}
           </div>
 
           <div
