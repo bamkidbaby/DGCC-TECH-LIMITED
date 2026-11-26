@@ -185,7 +185,7 @@ function HomeHero() {
   return (
     <section className="home-hero navy">
       <Image
-        src="/images/services/computer-sales.jpg"
+        src="/images/services/modern-dgcc-tech-training-reception.jpg"
         alt=""
         fill
         priority
