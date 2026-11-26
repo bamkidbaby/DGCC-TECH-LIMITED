@@ -2168,6 +2168,7 @@ h3 {
 }
 .home-service-pair {
   display: grid;
+  grid-auto-rows: 1fr;
   gap: clamp(1.25rem, 3vw, 2rem);
   border-bottom: 1px solid var(--line);
 }
@@ -2179,7 +2180,7 @@ h3 {
   border-bottom: 0;
 }
 .home-service-pair-image {
-  min-height: 260px;
+  height: clamp(260px, 32vw, 340px);
 }
 .home-service-pair article > div {
   padding: 1.35rem 0 1.6rem;
