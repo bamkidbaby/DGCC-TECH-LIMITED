@@ -2174,6 +2174,7 @@ h3 {
 }
 .home-service-pair article {
   display: grid;
+  grid-template-rows: auto 1fr;
   border-bottom: 1px solid var(--line);
 }
 .home-service-pair article:last-child {
